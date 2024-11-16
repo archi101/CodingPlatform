@@ -19,7 +19,7 @@ export type Question = {
 const Array: React.FC = () => {
     const navigate = useNavigate();
     const [darkMode, setDarkMode] = useState(false);
-    
+
     // Extract first 8 questions and transform them into required format
     const initialQuestions = questionsData.slice(0, 8).map(q => ({
         id: q.id,
@@ -57,7 +57,9 @@ const Array: React.FC = () => {
     }, [allQuestionsSolved]);
 
     const handleQuestionClick = (questionId: number) => {
-        navigate(`/array/question/${questionId}`, { replace: true });
+        const questionData = questionsData.find(q => q.id === questionId);
+        console.log(questionId, questionData);
+        navigate(`/array/question/${questionId}`, { replace: true, state: { question: questionData } });
     };
 
     const toggleDarkMode = () => setDarkMode(!darkMode);

@@ -1,12 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Special60Component from './assets/Components/Special60Component/Array';
 import LinkedList from './assets/Components/Special60Component/LinkedList';
-import QuestionPage from './assets/Components/Special60Component/QuestionPage';
 import Cpptsx from './assets/Components/Special60Component/cpptsx';
 import Courses from './assets/Components/Special60Component/Courses';
-
-import { collection, getDocs, setDoc, doc } from 'firebase/firestore';
-import { db } from './assets/special60Component/firebase';
+import QuestionIDEComponent from './assets/Components/QuestionIDEComponent/QuestionIDEComponent';
 
 // localStorage.clear();
 function App() {
@@ -18,7 +15,7 @@ function App() {
                 <Route path="/courses/cpp" element={<Cpptsx />} />
                 <Route path="/array" element={<Special60Component />} />
                 <Route path="/linkedlist" element={<LinkedList />} />
-                <Route path="/:topic/question/:questionId" element={<QuestionPage />} />
+                <Route path="/:topic/question/:questionId" element={<QuestionIDEComponent/>} />
             </Routes>
         </Router>
     );
