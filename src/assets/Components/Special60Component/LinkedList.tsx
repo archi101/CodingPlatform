@@ -1,4 +1,3 @@
-// LinkedList.tsx
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { Doughnut } from 'react-chartjs-2';
@@ -6,59 +5,57 @@ import './Array.css';
 import QuestionBlock from './QuestionBlock';
 import {useNavigate } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import questionsData from './questions';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export type Question = {
     id: number;
-    text: string;
+    title: string;
+    difficulty: string;
+    description: string;
     solved: boolean;
 };
 
 const LinkedList: React.FC = () => {
     const navigate = useNavigate();
-
     const [darkMode, setDarkMode] = useState(false);
-    const [blocksLinkedList, setBlocksLinkedList] = useState<Question[][]>([
-        [
-            { id: 21, text: 'Reverse a Linked List', solved: false },
-            { id: 22, text: 'Merge Two Sorted Linked Lists', solved: false },
-            { id: 23, text: 'Detect Cycle in a Linked List', solved: false },
-        ],
-        [
-            { id: 24, text: 'Find the Middle Element of a Linked List', solved: false },
-            { id: 25, text: 'Remove Duplicates from a Linked List', solved: false },
-        ],
-        [
-            { id: 26, text: 'Add Two Numbers Represented by Linked Lists', solved: false },
-            { id: 27, text: 'Intersection Point in Y Shaped Linked Lists', solved: false },
-        ],
-        [
-            { id: 28, text: 'Flatten a Multilevel Doubly Linked List', solved: false },
-            { id: 29, text: 'Sort a Linked List', solved: false },
-        ],
-    ]);
+    
+    // Extract questions 9-16 and transform them into required format
+    const initialQuestions = questionsData.slice(8, 16).map(q => ({
+        id: q.id,
+        title: q.title,
+        description: q.description,
+        difficulty: q.difficulty,
+        solved: false
+    }));
+
+    // Split questions into rows
+    const initialBlocksArray = [
+        initialQuestions.slice(0, 2),
+        initialQuestions.slice(2, 4),
+        initialQuestions.slice(4, 6),
+        initialQuestions.slice(6, 8)
+    ];
+
+    const [blocksLinkedList, setBlocksLinkedList] = useState<Question[][]>(initialBlocksArray);
 
     useEffect(() => {
         const savedBlocks = localStorage.getItem('linkedlist-blocks');
         if (savedBlocks) {
             setBlocksLinkedList(JSON.parse(savedBlocks));
         } else {
-            // Save initial data to localStorage if not present
             localStorage.setItem('linkedlist-blocks', JSON.stringify(blocksLinkedList));
         }
     }, []);
 
-    // Flatten the blocksLinkedList for progress calculations and rendering
     const questions = blocksLinkedList.flat();
     const totalQuestions = questions.length;
     const solvedQuestions = questions.filter(q => q.solved).length;
     const solvedPercentage = ((solvedQuestions / totalQuestions) * 100).toFixed(2);
 
-    // Mark Linked List topic as complete if all questions are solved
     const allQuestionsSolved = solvedQuestions === totalQuestions;
 
-    // Update completion status in localStorage
     useEffect(() => {
         localStorage.setItem('linkedlist-complete', JSON.stringify(allQuestionsSolved));
     }, [allQuestionsSolved]);
@@ -102,8 +99,8 @@ const LinkedList: React.FC = () => {
                     {questions.map(question => (
                         <QuestionBlock
                             key={question.id}
-                            title={question.text}
-                            difficulty="Easy"
+                            title={question.title}
+                            difficulty={question.difficulty}
                             problemType="Problem Solving (Basic)"
                             maxScore={10}
                             successRate={93.00}

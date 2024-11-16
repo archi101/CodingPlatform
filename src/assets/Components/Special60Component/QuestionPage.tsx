@@ -60,7 +60,7 @@ const QuestionPage: React.FC = () => {
     return (
         <div className="question-page">
             <h1>Question {question.id}</h1>
-            <p>{question.text}</p>
+            <p>{question.title}</p>
             <button
                 className="submit-button"
                 onClick={handleQuestionSubmit}

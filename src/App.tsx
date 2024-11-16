@@ -1,5 +1,3 @@
-// App.tsx
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Special60Component from './assets/Components/Special60Component/Array';
 import LinkedList from './assets/Components/Special60Component/LinkedList';
